@@ -1,0 +1,89 @@
+<%- include('../inc/top') %>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card border border-success">
+                    <div class="card-header text-primary">
+                        <h2>
+                            Thông tin Category
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="text">Name</label>
+                            <input type="text" class="form-control" value="<%= ct.name %>" disabled>
+                        </div>
+                        <br>
+                        <h6 class="text-danger">
+                            <%=msg%>
+                        </h6>
+                        <hr>
+                        <a type="button" class="btn btn-secondary me-2" href="/pr/ct">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <%if(typeof(ttAc)!='undefined'){%>
+                            <%if(ttAc.role=='admin' ){%>
+                                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal"
+                                    data-bs-target="#ModalUpdate">
+                                    Update
+                                </button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#ModalDelete">
+                                    Delete
+                                </button>
+                                <%}%>
+                                    <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <%- include('../inc/bottom') %>
+
+        <!-- Modal Update -->
+        <div class="modal fade" id="ModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Category</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label for="text">Name</label>
+                                <input type="text" class="form-control bg-light" value="<%= ct.name %>"
+                                    placeholder="Name" name="name" required>
+                            </div>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-success">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete -->
+        <div class="modal fade" id="ModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Bạn muốn xóa category này</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <a href="/pr/ct/delete/<%= ct._id %>"><button class="btn btn-danger">Xóa</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>

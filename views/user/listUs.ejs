@@ -1,0 +1,125 @@
+<%- include('../inc/top') %>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 text-primary">
+                <h1>Bảng User</h1>
+            </div>
+            <div class="col-7">
+                <%if(typeof(ttAc)!='undefined'){%>
+                    <%if(ttAc.role=='admin' ){%>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAdd">
+                            Add User
+                        </button>
+                        <%}%>
+                            <%}%>
+
+            </div>
+            <div class="center col-4">
+                <form class="d-flex" method="get">
+                    <input class="form-control me-2 border border-success" type="search" name="username"
+                        placeholder="Tìm kiếm Username" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-12 table-responsive">
+        <h6 class="text-warning">Chú ý: ấn tiêu đề cột xanh để sắp xếp</h6>
+        <table class="table border border border-success table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><a href="/?loc_cot=2">Username</a></th>
+                    <th><a href="/?loc_cot=3">Email</a></th>
+                    <th><a href="/?loc_cot=4">Role</a></th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% us.forEach((row)=>{%>
+                    <tr>
+                        <th>
+                            <%=row._id%>
+                        </th>
+                        <td>
+                            <%=row.username%>
+                        </td>
+                        <td>
+                            <%=row.email%>
+                        </td>
+                        <td>
+                            <%=row.role%>
+                        </td>
+                        <td>
+                            <a class="bi bi-clipboard-minus" href="/ttUs/<%=row._id%>"></a>
+                        </td>
+                    </tr>
+                    <%});%>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <h4>
+            Tổng: <%= us.length %>
+        </h4>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <%- include('../inc/bottom') %>
+
+        <!-- Modal add -->
+        <div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm User</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            <input type="text" class="form-control bg-light" placeholder="Username" name="username"
+                                required>
+                            <br>
+                            <input type="email" class="form-control bg-light" placeholder="Email" name="email" required>
+                            <br>
+                            <input type="password" class="form-control bg-light" placeholder="Password" name="password"
+                                required>
+                            <br>
+                            <select class="form-select bg-light" name="role" required>
+                                <option value="" selected disabled>
+                                    Chọn Role
+                                </option>
+                                <option value="admin">
+                                    Admin
+                                </option>
+                                <option value="user">
+                                    User
+                                </option>
+                            </select>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

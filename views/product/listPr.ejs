@@ -1,0 +1,142 @@
+<%- include('../inc/top') %>
+
+    <div class="mb-3 col-12 rounded">
+        <div class="row text-primary">
+            <h1>Bảng Sản Phẩm</h1>
+            <div class="col-6">
+                <%if(typeof(ttAc)!='undefined'){%>
+                    <%if(ttAc.role=='admin' ){%>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Add Product
+                        </button>
+                        <%}%>
+                            <%}%>
+            </div>
+            <div class="center col-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Lọc status
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="">
+                                Tất cả
+                            </a></li>
+                        <li><a class="dropdown-item" href="/?status=1">
+                                hoạt động
+                            </a></li>
+                        <li><a class="dropdown-item" href="/?status=0">
+                                không hoạt động
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 table-responsive">
+        <h6 class="text-warning">Chú ý: ấn tiêu đề cột xanh để sắp xếp</h6>
+        <table class="table border border-success table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><a href="/pr/?loc_cot=2">Name</a></th>
+                    <th>Category</th>
+                    <th>Avatar</th>
+                    <th>Description</th>
+                    <th><a href="/pr/?loc_cot=6">Price</a></th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%pr.forEach((row)=>{%>
+                    <tr>
+                        <th>
+                            <%=row._id%>
+                        </th>
+                        <td>
+                            <%=row.name%>
+                        </td>
+                        <td>
+                            <%=row.id_category.name%>
+                        </td>
+                        <td>
+                            <img class="img-thumbnail img rounded mx-auto d-block" src="<%=row.avatar%>">
+                        </td>
+                        <td>
+                            <%=row.description%>
+                        </td>
+                        <td>
+                            <%=row.price%> VND
+                        </td>
+                        <td>
+                            <a class="bi bi-clipboard-minus" href="/pr/ttPr/<%=row._id%>"></a>
+                        </td>
+                    </tr>
+                    <%});%>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <h4>
+            Tổng: <%= pr.length %>
+        </h4>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <%- include('../inc/bottom') %>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="text" class="form-control bg-light" placeholder="Name" name="name" required>
+                            <br>
+                            <select class="form-select bg-light" name="category" required>
+                                <option value="" selected disabled>Chọn Loại</option>
+                                <% ct.forEach( (row)=>{%>
+                                    <option value="<%=row._id%>">
+                                        <%= row.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                            <br>
+                            <input type="number" class="form-control bg-light" placeholder="Price" name="price"
+                                required>
+                            <br>
+                            <textarea placeholder="Description" class="form-control bg-light" name="description"
+                                cols="30" rows="10"></textarea>
+                            <br>
+                            <input type="file" class="form-control bg-light" name="avatar" required>
+                            <br><br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

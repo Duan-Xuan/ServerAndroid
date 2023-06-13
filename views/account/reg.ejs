@@ -1,0 +1,61 @@
+<%- include('../inc/top') %>
+
+    <div class="bg-light justify-content-center p-3 text-center border border-info shadow-sm row">
+        <div class="col-12">
+            <img class="img-thumbnail" src="../images/logo.png">
+        </div>
+        <div class="col-md-6">
+            <br>
+            <div class="card border border-success">
+                <div class="card-header">
+                    <h1>
+                        Đăng ký
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="text">Username</label>
+                            <input type="text" class="form-control bg-light" name="username"
+                                placeholder="Enter username" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control bg-light" name="email" placeholder="Enter email"
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control bg-light" name="password"
+                                placeholder="Enter password" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="password">Confirm Password</label>
+                            <input type="password" class="form-control bg-light" placeholder="Enter the password"
+                                name="password2" required>
+                        </div>
+                        <p class="text-danger">
+                            <%=msg%>
+                        </p>
+                        <button type="submit" class="btn btn-success">Đăng ký</button>
+                        <hr>
+                        <div class="col-12 row">
+                            <div class="col-7">
+                                <a class="btn btn-danger" href="/">
+                                    Trang chủ
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <a href="/ac/login" class="btn btn-primary">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../inc/bottom') %>

@@ -1,0 +1,96 @@
+<%- include('../inc/top') %>
+
+    <div class="mb-3 col-12">
+        <div class="row text-primary">
+            <h1>Bảng Loại</h1>
+            <div class="col-7">
+                <%if(typeof(ttAc)!='undefined'){%>
+                    <%if(ttAc.role=='admin' ){%>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAdd">
+                            Add Category
+                        </button>
+                        <%}%>
+                            <%}%>
+            </div>
+            <div class="center col-4">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2 border border-success" type="search" name="name"
+                        placeholder="Tìm kiếm Name" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 table-responsive">
+        <h6 class="text-warning">Chú ý: ấn tiêu đề cột xanh để sắp xếp</h6>
+        <table class="table border border-success table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><a href="/pr/ct/?loc_cot=2">Name</a></th>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%ct.forEach((row)=>{%>
+                    <tr>
+                        <th>
+                            <%=row._id%>
+                        </th>
+                        <td>
+                            <%=row.name%>
+                        </td>
+                        <td>
+                            <a class="bi bi-clipboard-minus" href="/pr/ct/ttCt/<%=row._id%>"></a>
+                        </td>
+                    </tr>
+                    <%});%>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <h4>
+            Tổng: <%= ct.length %>
+        </h4>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <%- include('../inc/bottom') %>
+
+        <!-- Modal add -->
+        <div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Category</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            <input type="text" class="form-control bg-light" placeholder="Name" name="name" required>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,144 @@
+<%- include('../inc/top') %>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <div class="card border border-success">
+                <div class="card-header text-primary">
+                    <h2>
+                        Thông tin Product
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="text">Avatar</label>
+                        <img src="<%= pr.avatar %>" class="img-thumbnail img rounded mx-auto d-block">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="text">Name</label>
+                        <input type="text" class="form-control" value="<%= pr.name %>" disabled>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="text">Role</label>
+                        <select class="form-select" disabled>
+                            <%ct.forEach((row)=>{
+                                let selected = '';
+                                if(String(row._id) == String(pr.id_category))
+                                selected = ' selected ';
+                                %>
+                                <option <%=selected%> value="<%= row._id %>">
+                                        <%= row.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="text">Price</label>
+                        <input type="number" class="form-control" value="<%= pr.price %>" disabled>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="text">Description</label>
+                        <textarea class="form-control" cols="30" rows="10" disabled><%= pr.description %></textarea>
+                    </div>
+                    <h6 class="text-danger">
+                        <%=msg%>
+                    </h6>
+                    <hr>
+                    <a type="button" class="btn btn-secondary me-2" href="/pr">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    <%if(typeof(ttAc)!='undefined'){%>
+                        <%if(ttAc.role=='admin' ){%>
+                            <button type="button" class="btn btn-success me-2" data-bs-toggle="modal"
+                                data-bs-target="#ModalUpdate">
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#ModalDelete">
+                                Delete
+                            </button>
+                            <%}%>
+                                <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../inc/bottom') %>
+
+        <!-- Modal Update -->
+        <div class="modal fade" id="ModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="text">Name</label>
+                                <input type="text" class="form-control bg-light" value="<%= pr.name %>"
+                                    placeholder="Name" name="name" required>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="text">Category</label>
+                                <select class="form-select bg-light" name="category">
+                                    <%ct.forEach((row)=>{
+                                        let selected = '';
+                                        if(String(row._id) == String(pr.id_category))
+                                        selected = ' selected ';
+                                        %>
+                                        <option <%=selected%> value="<%= row._id %>">
+                                                <%= row.name %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="text">Price</label>
+                                <input type="number" class="form-control bg-light" value="<%= pr.price %>"
+                                    placeholder="Price" name="price" required>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="text">Description</label>
+                                <textarea placeholder="Description" class="form-control bg-light" name="description"
+                                    cols="30" rows="10"><%= pr.description %></textarea>
+                            </div>
+                            <br>
+                            <input type="file" class="form-control bg-light" name="avatar" required>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-success">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete -->
+        <div class="modal fade" id="ModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-primary">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Bạn muốn xóa product này</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <a href="/pr/delete/<%= pr._id %>"><button class="btn btn-danger">Xóa</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
