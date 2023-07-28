@@ -3,7 +3,7 @@ var router = express.Router();
 var api = require('../controller/api/user.api');
 var midw = require('../middleware/api_auth');
 
-router.post('/user', midw.api_auth, api.Update); // ds u:  /api/users
+router.post('/user', midw.api_auth, api.Update); // ds:  /api/users
 
 router.post('/user/login', api.Login); // đăng nhập
 

@@ -1,10 +1,11 @@
-require('dotenv').config(); // su dung thu vien doc file env
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+// su dung thu vien doc file env
+require('dotenv').config();
 
 var indexUsRouter = require('./routes/indexUs');
 var indexSpRouter = require('./routes/indexPr');

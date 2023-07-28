@@ -19,12 +19,12 @@ exports.ListPr = async (req, res, next) => {
     try {
         let list = await myMd2.prModel.find();
         if (list) {
-            return res.status(200).json({ data: list, msg: 'Lấy dữ liệu thành công' });
+            return res.json({ status: true, message: list })
         } else {
-            return res.status(204).json({ msg: 'Không có dữ liệu' });
+            return res.json({ status: false, message: "Không có dữ liệu" })
         }
     } catch (error) {
-        return res.status(500).json({ msg: error.message });
+        return res.json({ status: false, message: error.message });
     }
 }
 
@@ -32,43 +32,43 @@ exports.ListCt = async (req, res, next) => {
     try {
         let list = await myMd2.ctModel.find();
         if (list) {
-            return res.status(200).json({ data: list, msg: 'Lấy dữ liệu thành công' });
+            return res.json({ status: true, message: list })
         } else {
-            return res.status(204).json({ msg: 'Không có dữ liệu' });
+            return res.json({ status: false, message: "Không có dữ liệu" })
         }
     } catch (error) {
-        return res.status(500).json({ msg: error.message });
+        return res.json({ status: false, message: error.message });
     }
 }
 
 exports.Login = async (req, res, next) => {
+    const { username, password } = req.body;
     try {
         const user = await myMd.usModel
-            .findByCredentials(req.body.username, req.body.password)
-        if (!user) {
-            return res.status(401)
-                .json({ error: 'Sai thông tin đăng nhập' })
-        }
+            .findByCredentials(username, password)
         // đăng nhập thành công, tạo token làm việc mới
         const token = await user.generateAuthToken()
-        return res.status(200).send({ user, token })
+        if (user.role == 'admin') {
+            return res.json({ status: false, message: 'Chỉ user mới có thể đăng nhập!' })
+        } else {
+            return res.json({ status: true, message: token })
+        }
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ msg: error.message })
+        return res.json({ status: false, message: 'Sai thông tin đăng nhập' })
     }
 }
 
 exports.Reg = async (req, res, next) => {
     try {
-        const salt = await bcrypt.genSalt(10);
         const user = new myMd.usModel(req.body);
+        const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(req.body.password, salt);
-        const token = await user.generateAuthToken();
-        let new_u = await user.save()
-        return res.status(201).json({ user: new_u, token })
+        await user.generateAuthToken();
+        return res.json({ status: true, message: 'Đăng ký thành công' })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ msg: error.message })
+        return res.json({ status: false, message: error.massage })
     }
 }
 

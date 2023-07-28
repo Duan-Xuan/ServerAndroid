@@ -29,7 +29,7 @@ usSchema.methods.generateAuthToken = async function () {
     // user.tokens = user.tokens.concat({token}) // code này dành cho nhiều token, ở demo này dùng 1 token
     user.token = token;
     await user.save()
-    return token
+    return null
 }
 
 usSchema.statics.findByCredentials = async (username, password) => {
